@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title>Localization Test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="jquery.localize.js"></script>
+    <script>
+      $(document).ready(function() {
+        $.localize({
+          "url": "",                          // Location of resources file, which following 
+                                              // the same format of "resources" parameter;
+
+          "resources":{                       // Resources. A object in the format of
+                                              // {"$language_code": {"$tag": "action copy in the current language."}};
+                                              // $language_code is language code, like en-us, zh-cn;
+                                              // $tag is a string used in your code as
+                                              // a place holder for actual copy, like "CANCEL", "COPY";
+            "en-us": {
+              "CANCEL": "Cancel",
+              "CANCEL_ACTION": "Cancel ${0}",
+              "COPY": "Copy"
+            }
+          },
+          "defaultLanguage": "en-us",         // When call localize method without language
+                                              // specified in options, this language will be used;
+
+          "attribute": "ux:localize"          // Name of the attributes used for
+                                              // localization tag in HTML element. 
+                                              // For example: 
+                                              // <a class="button" ux:localize="CANCEL" href="#cancel"></a>
+                                              // When it isn't a standard HTML attribute,
+                                              // you may need add xsd reference in your HTML document.
+        });
+      });
+      $.localize('url', 'zh-cn.js');
+      function localizeHTMLFragment() {
+        $('<a id="btnCancel" class="button" ux:localize="CANCEL" href="#cancel"></a>').localize().appendTo('#btnPanel');
+      }
+    </script>
+  </head>
+  <body>
+    <p>
+      <a id="btnCancel" class="button" ux:localize="CANCEL" href="#cancel">CANCEL</a>
+      <h1>Example 1: Basic</h1>
+      <button onclick="$('#btnCancel').localize();">Localize</button>
+      <h1>Example 2: Specify Language</h1>
+      <button onclick="$('#btnCancel').localize({language: 'zh-cn'});">Localize in zh-cn</button>
+    </p>
+    <p>
+      <a id="btnCancelAction" class="button" ux:localize="CANCEL_ACTION" href="#cancelAction">CANCEL_ACTION</a>
+      <h1>Example 3: Use Substitutable Variables</h1>
+      <button onclick="$('#btnCancelAction').localize({variables:['Copy']});">Localize with variables ['Copy']</button>
+      <button onclick="$('#btnCancelAction').localize({variables:['Delete']});">Localize with variables ['Delete']</button>
+    </p>
+    <h1>Example 4: Localize HTML Fragment</h1>
+    <div id="btnPanel"></div>
+    <button onclick="localizeHTMLFragment();">Insert Localized Fragment to div</button>
+    <h1>Example 5: Localize String</h1>
+    <button onclick="alert('COPY'.localize())">Localize String 'COPY'</button>
+  </body>
+</html>
