@@ -1,5 +1,5 @@
 String externalization for jQuery
-  =================================
+=================================
 Xiaoxing Wang (<xiaohwan@gmail.com>)
 # Usage
 ## Configure
